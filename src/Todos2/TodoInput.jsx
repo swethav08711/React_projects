@@ -1,9 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 
-const TodoInput = () => {
+const TodoInput = ({ onAdd }) => {
+  const [state, setState] = useState("")
   return (
     <div>
-      <h1>input</h1>
+      <input
+        value={state}
+        onChange={e => setState(e.target.value)}
+        placeholder="add something"
+      />
+      <button
+        onClick={() => {
+          onAdd(state)
+          setState("")
+        }}
+      >
+        ADD
+      </button>
     </div>
   )
 }
