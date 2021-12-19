@@ -1,12 +1,10 @@
 import React from "react"
-import TodoInput from "./TodoApp/TodoInput"
-import TodoList from "./TodoApp/TodoList"
+import MainTodo2 from "./Todos2/MainTodo2"
 
 function App() {
   return (
     <>
-      <TodoInput />
-      <TodoList />
+      <MainTodo2 />
     </>
   )
 }
