@@ -1,4 +1,31 @@
-import { createStore } from "redux"
-import reducer from "./reducer"
+import { applyMiddleware, combineReducers, createStore, compose } from "redux"
+import { authReducer } from "./auth/reducer"
+import reducer from "./todos/reducer"
 
-export const store = createStore(reducer)
+const rootReducer = combineReducers({
+  auth: authReducer,
+  app: reducer,
+})
+const logger = state => next => action => {
+  console.log("dispatching action,", action, next, state)
+  const val = next(action)
+  console.log("exiting logger")
+  return val
+}
+const logger2 = state => next => action => {
+  console.log("dispatching action,", action, next, state)
+  const val = next(action)
+  console.log("exiting logger2")
+  return val
+}
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose
+
+const enhancer = composeEnhancers(
+  applyMiddleware(logger, logger2)
+  // other store enhancers if any
+)
+
+export const store = createStore(rootReducer, enhancer)

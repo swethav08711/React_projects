@@ -1,10 +1,12 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import TodoInput from "./TodoInput"
-import TodoList from "./TodoList"
+import { adTodo } from "../../ReduxTodo1/todos/action"
+
 import { v4 as uuid } from "uuid"
-import { adTodo } from "../ReduxTodo1/todos/action"
-const MainTodo2 = () => {
+import TodoInput from "../../Todos2/TodoInput"
+import TodoList from "../../Todos2/TodoList"
+
+const MainTo = () => {
   const dispatch = useDispatch()
   const handleAdd = text => {
     const action = adTodo({
@@ -22,4 +24,4 @@ const MainTodo2 = () => {
   )
 }
 
-export default MainTodo2
+export default MainTo

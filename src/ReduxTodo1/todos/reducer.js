@@ -1,15 +1,18 @@
+import { loadData, saveData } from "../../utilsTodo1/localstorage"
 import { actionConstants } from "./action"
 
 const initState = {
-  todos: [{ id: 1, status: true, title: "React Redux" }],
+  todos: loadData("todos") || [],
 }
 function reducer(state = initState, action) {
   console.log("default", state, action)
   switch (action.type) {
     case actionConstants.ADD_TODO: {
+      const updateTodo = [...state.todos, action.payload]
+      saveData("todos", updateTodo)
       return {
         ...state,
-        todos: [...state.todos, action.payload],
+        todos: updateTodo,
       }
     }
     case actionConstants.REMOVE_TODO_ITEM: {
