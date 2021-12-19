@@ -23,3 +23,11 @@ const reducer = (state = initState, { type, payload }) => {
   }
 }
 export { reducer }
+
+//create action
+//create reducer
+//create store
+//pass store in provider
+//select data from store
+//pass data it to required elements
+//diapatch an action depending on user input
