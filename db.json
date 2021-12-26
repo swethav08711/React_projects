@@ -1,0 +1,9 @@
+{
+  "posts": [
+    {
+      "title": "React",
+      "status": false,
+      "id": 1
+    }
+  ]
+}

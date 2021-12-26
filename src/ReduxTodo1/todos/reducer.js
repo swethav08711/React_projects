@@ -3,10 +3,32 @@ import { actionConstants } from "./action"
 
 const initState = {
   todos: loadData("todos") || [],
+  isLoading: true,
+  isError: false,
 }
 function reducer(state = initState, action) {
   console.log("default", state, action)
   switch (action.type) {
+    case actionConstants.GET_TODO_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+      }
+    }
+    case actionConstants.GET_TODO_SUCESS: {
+      return {
+        ...state,
+        todos: action.payload.todos,
+        isLoading: false,
+      }
+    }
+    case actionConstants.GET_TODO_FAILURE: {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      }
+    }
     case actionConstants.ADD_TODO: {
       const updateTodo = [...state.todos, action.payload]
       saveData("todos", updateTodo)

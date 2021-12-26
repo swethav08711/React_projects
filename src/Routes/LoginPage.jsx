@@ -20,9 +20,11 @@ const LoginPage = () => {
   if (isAuth) {
     return <Redirect to="/" />
   }
+
   return (
     <>
       <Login handleLogin={handleLogin} />
+       
     </>
   )
 }
