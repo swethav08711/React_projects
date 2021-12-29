@@ -1,30 +1,28 @@
 import React from "react"
-import { useDispatch } from "react-redux"
+import { shallowEqual, useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
-import { loginFailure, loginSucess } from "../ReduxTodo1/auth/action"
+import { loginUser } from "../ReduxTodo1/auth/action"
 import { Login } from "../Todos2/Login"
-
 const LoginPage = () => {
   const dispatch = useDispatch()
-  const isAuth = useSelector(state => state.auth.isAuth)
+  const { isAuth, isLoading, isError, token } = useSelector(
+    state => state.auth,
+    shallowEqual
+  )
   const handleLogin = ({ email, password }) => {
-    if (email === "admin" && password === "admin") {
-      const action = loginSucess("fakeToken")
-      dispatch(action)
-    } else {
-      const action = loginFailure("wrong credentails")
-      dispatch(action)
-    }
+    dispatch(loginUser({ email, password }))
   }
   if (isAuth) {
     return <Redirect to="/" />
   }
-
+  if (isLoading) {
+    return <div>....loading</div>
+  }
   return (
     <>
       <Login handleLogin={handleLogin} />
-       
+      {isError && <div>something went wrong</div>}
     </>
   )
 }

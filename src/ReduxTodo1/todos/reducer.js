@@ -1,56 +1,57 @@
-import { loadData, saveData } from "../../utilsTodo1/localstorage"
-import { actionConstants } from "./action"
+import {
+  ADD_TODO_FAILURE,
+  ADD_TODO_REQUEST,
+  ADD_TODO_SUCCESS,
+  GET_TODO_FAILURE,
+  GET_TODO_REQUEST,
+  GET_TODO_SUCCESS,
+} from "./actionTypes"
 
 const initState = {
-  todos: loadData("todos") || [],
-  isLoading: true,
+  todos: [],
+  isLoading: false,
   isError: false,
 }
-function reducer(state = initState, action) {
-  console.log("default", state, action)
-  switch (action.type) {
-    case actionConstants.GET_TODO_REQUEST: {
+function reducer(state = initState, { type, payload }) {
+  switch (type) {
+    case ADD_TODO_REQUEST: {
       return {
         ...state,
         isLoading: true,
+        isError: false,
       }
     }
-    case actionConstants.GET_TODO_SUCESS: {
+    case ADD_TODO_SUCCESS: {
       return {
         ...state,
-        todos: action.payload.todos,
+
         isLoading: false,
       }
     }
-    case actionConstants.GET_TODO_FAILURE: {
+    case ADD_TODO_FAILURE: {
       return {
         ...state,
-        isLoading: false,
         isError: true,
       }
     }
-    case actionConstants.ADD_TODO: {
-      const updateTodo = [...state.todos, action.payload]
-      saveData("todos", updateTodo)
+    case GET_TODO_REQUEST: {
       return {
         ...state,
-        todos: updateTodo,
+        isLoading: true,
+        isError: false,
       }
     }
-    case actionConstants.REMOVE_TODO_ITEM: {
+    case GET_TODO_SUCCESS: {
       return {
         ...state,
-        todos: state.todos.filter(item => item.id !== action?.payload?.id),
+        todos: payload,
+        isLoading: false,
       }
     }
-    case actionConstants.TOGGLE_TODO_STATUS: {
+    case GET_TODO_FAILURE: {
       return {
         ...state,
-        todos: state.todos.map(item =>
-          item.id === action.payload.id
-            ? { ...item, status: !item.status }
-            : item
-        ),
+        isError: true,
       }
     }
     default:
